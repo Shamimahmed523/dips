@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"], select {
+      padding: 10px;
+      margin-bottom: 12px;
+      width: 100%;
+      font-size: 16px;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    /* Mobile-Friendly */
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+
+      table, th, td {
+        font-size: 14px;
+      }
+
+      input[type="text"], select {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Support Tracker</h1>
+
+  <!-- Filter Input -->
+  <input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Search by Name, Location, or Problem...">
+
+  <!-- Status Dropdown Filter -->
+  <select id="statusFilter" onchange="filterTable()">
+    <option value="">Filter by Status</option>
+    <option value="Pending">Pending</option>
+    <option value="Processing">Processing</option>
+    <option value="Solved">Solved</option>
+  </select>
+
+  <table id="issueTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Problem</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John Doe</td>
+        <td>Dhaka</td>
+        <td>Network issue</td>
+        <td>Pending</td>
+      </tr>
+      <tr>
+        <td>Jane Smith</td>
+        <td>Chittagong</td>
+        <td>Server downtime</td>
+        <td>Processing</td>
+      </tr>
+      <tr>
+        <td>Michael Lee</td>
+        <td>Rajshahi</td>
+        <td>Software bug</td>
+        <td>Solved</td>
+      </tr>
+      <tr>
+        <td>Emily White</td>
+        <td>Khulna</td>
+        <td>Database issue</td>
+        <td>Pending</td>
+      </tr>
+      <tr>
+        <td>Chris Brown</td>
+        <td>Barisal</td>
+        <td>Slow performance</td>
+        <td>Processing</td>
+      </tr>
+      <tr>
+        <td>Anna Johnson</td>
+        <td>Sylhet</td>
+        <td>Login failure</td>
+        <td>Solved</td>
+      </tr>
+      <tr>
+        <td>David Clark</td>
+        <td>Mymensingh</td>
+        <td>Broken link</td>
+        <td>Pending</td>
+      </tr>
+      <tr>
+        <td>Sarah Wilson</td>
+        <td>Rangpur</td>
+        <td>File corruption</td>
+        <td>Processing</td>
+      </tr>
+      <tr>
+        <td>Kevin Harris</td>
+        <td>Comilla</td>
+        <td>Memory leak</td>
+        <td>Solved</td>
+      </tr>
+      <tr>
+        <td>Alice Martinez</td>
+        <td>Dhaka</td>
+        <td>Security breach</td>
+        <td>Pending</td>
+      </tr>
+      <tr>
+        <td>Robert Lee</td>
+        <td>Chittagong</td>
+        <td>Network issue</td>
+        <td>Processing</td>
+      </tr>
+      <tr>
+        <td>Olivia Thomas</td>
+        <td>Rajshahi</td>
+        <td>Website down</td>
+        <td>Solved</td>
+      </tr>
+      <tr>
+        <td>James Anderson</td>
+        <td>Khulna</td>
+        <td>Data loss</td>
+        <td>Pending</td>
+      </tr>
+      <tr>
+        <td>Laura Turner</td>
+        <td>Barisal</td>
+        <td>Outdated software</td>
+        <td>Processing</td>
+      </tr>
+      <tr>
+        <td>Michael Scott</td>
+        <td>Sylhet</td>
+        <td>Broken hardware</td>
+        <td>Solved</td>
+      </tr>
+      <tr>
+        <td>Lisa Green</td>
+        <td>Dhaka</td>
+        <td>Memory issue</td>
+        <td>Pending</td>
+      </tr>
+      <tr>
+        <td>David Brown</td>
+        <td>Chittagong</td>
+        <td>Server crash</td>
+        <td>Processing</td>
+      </tr>
+      <tr>
+        <td>Tom Wilson</td>
+        <td>Rajshahi</td>
+        <td>Broken cable</td>
+        <td>Solved</td>
+      </tr>
+      <tr>
+        <td>Susan Taylor</td>
+        <td>Khulna</td>
+        <td>Disk space issue</td>
+        <td>Pending</td>
+      </tr>
+      <tr>
+        <td>Daniel Moore</td>
+        <td>Comilla</td>
+        <td>Connection error</td>
+        <td>Processing</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function filterTable() {
+    const input = document.getElementById('filterInput');
+    const filter = input.value.toUpperCase();
+    const table = document.getElementById('issueTable');
+    const tr = table.getElementsByTagName('tr');
+    const statusFilter = document.getElementById('statusFilter').value;
+
+    for (let i = 1; i < tr.length; i++) {
+      const td = tr[i].getElementsByTagName('td');
+      let match = false;
+
+      // Check if name, location, or problem matches the filter text
+      for (let j = 0; j < td.length - 1; j++) {
+        if (td[j] && td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+          match = true;
+        }
+      }
+
+      // Check if status matches the selected status filter
+      const statusCell = td[3];
+      if (statusFilter && statusCell.innerHTML !== statusFilter) {
+        match = false;
+      }
+
+      if (match) {
+        tr[i].style.display = '';
+      } else {
+        tr[i].style.display = 'none';
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
