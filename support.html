@@ -13,7 +13,7 @@
     }
 
     .container {
-      max-width: 600px;
+      max-width: 800px;
       margin: 20px auto;
       padding: 20px;
       background-color: #fff;
@@ -25,16 +25,6 @@
       text-align: center;
       color: #4CAF50;
       margin-bottom: 20px;
-    }
-
-    input[type="text"], select {
-      padding: 10px;
-      margin-bottom: 12px;
-      width: 100%;
-      font-size: 16px;
-      box-sizing: border-box;
-      border: 1px solid #ddd;
-      border-radius: 4px;
     }
 
     table {
@@ -53,26 +43,138 @@
       background-color: #f2f2f2;
     }
 
-    /* Mobile-Friendly */
-    @media (max-width: 600px) {
-      .container {
-        padding: 10px;
-      }
-
-      table, th, td {
-        font-size: 14px;
-      }
-
-      input[type="text"], select {
-        font-size: 14px;
-      }
+    .input-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 60%;
+      z-index: 1000;
     }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .input-popup input {
+      width: 90%;
+      padding: 10px;
+      font-size: 14px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .popup-buttons {
+      text-align: right;
+    }
+
+    .popup-buttons button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .popup-buttons button:hover {
+      background-color: #45a049;
+    }
+
+    .add-button {
+      text-align: right;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Status Row Colors */
+    .status-pending {
+      background-color: #f8d7da; /* Red */
+    }
+
+    .status-processing {
+      background-color: #fff3cd; /* Yellow */
+    }
+
+    .status-solved {
+      background-color: #d4edda; /* Green */
+    }
+
+    /* General container for inputs */
+input[type="text"], select {
+  padding: 10px;
+  margin: 10px 0; /* Added margin for spacing between elements */
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Adjust for search input and status filter to be inline on larger screens */
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Space between the inputs */
+  margin-bottom: 20px; /* Space below the filters */
+}
+
+.filter-container input[type="text"],
+.filter-container select {
+  width: 48%; /* Ensure both inputs fit in a row */
+}
+
+/* Mobile-friendly adjustments */
+@media (max-width: 600px) {
+  .filter-container {
+    flex-direction: column; /* Stack the filters vertically */
+  }
+
+  .filter-container input[type="text"],
+  .filter-container select {
+    width: 100%; /* Make inputs full-width on smaller screens */
+  }
+}
+
   </style>
 </head>
 <body>
 
 <div class="container">
   <h1>Support Tracker</h1>
+
+  <!-- Add Button -->
+  <div class="add-button">
+    <button id="openPopupBtn">Add</button>
+  </div>
 
   <!-- Filter Input -->
   <input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Search by Name, Location, or Problem...">
@@ -85,141 +187,100 @@
     <option value="Solved">Solved</option>
   </select>
 
+  <!-- Table -->
   <table id="issueTable">
     <thead>
       <tr>
-        <th>Name</th>
+        <th>Name & Contact</th>
         <th>Location</th>
         <th>Problem</th>
         <th>Status</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>John Doe</td>
-        <td>Dhaka</td>
-        <td>Network issue</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>Jane Smith</td>
-        <td>Chittagong</td>
-        <td>Server downtime</td>
-        <td>Processing</td>
-      </tr>
-      <tr>
-        <td>Michael Lee</td>
-        <td>Rajshahi</td>
-        <td>Software bug</td>
-        <td>Solved</td>
-      </tr>
-      <tr>
-        <td>Emily White</td>
-        <td>Khulna</td>
-        <td>Database issue</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>Chris Brown</td>
-        <td>Barisal</td>
-        <td>Slow performance</td>
-        <td>Processing</td>
-      </tr>
-      <tr>
-        <td>Anna Johnson</td>
-        <td>Sylhet</td>
-        <td>Login failure</td>
-        <td>Solved</td>
-      </tr>
-      <tr>
-        <td>David Clark</td>
-        <td>Mymensingh</td>
-        <td>Broken link</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>Sarah Wilson</td>
-        <td>Rangpur</td>
-        <td>File corruption</td>
-        <td>Processing</td>
-      </tr>
-      <tr>
-        <td>Kevin Harris</td>
-        <td>Comilla</td>
-        <td>Memory leak</td>
-        <td>Solved</td>
-      </tr>
-      <tr>
-        <td>Alice Martinez</td>
-        <td>Dhaka</td>
-        <td>Security breach</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>Robert Lee</td>
-        <td>Chittagong</td>
-        <td>Network issue</td>
-        <td>Processing</td>
-      </tr>
-      <tr>
-        <td>Olivia Thomas</td>
-        <td>Rajshahi</td>
-        <td>Website down</td>
-        <td>Solved</td>
-      </tr>
-      <tr>
-        <td>James Anderson</td>
-        <td>Khulna</td>
-        <td>Data loss</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>Laura Turner</td>
-        <td>Barisal</td>
-        <td>Outdated software</td>
-        <td>Processing</td>
-      </tr>
-      <tr>
-        <td>Michael Scott</td>
-        <td>Sylhet</td>
-        <td>Broken hardware</td>
-        <td>Solved</td>
-      </tr>
-      <tr>
-        <td>Lisa Green</td>
-        <td>Dhaka</td>
-        <td>Memory issue</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>David Brown</td>
-        <td>Chittagong</td>
-        <td>Server crash</td>
-        <td>Processing</td>
-      </tr>
-      <tr>
-        <td>Tom Wilson</td>
-        <td>Rajshahi</td>
-        <td>Broken cable</td>
-        <td>Solved</td>
-      </tr>
-      <tr>
-        <td>Susan Taylor</td>
-        <td>Khulna</td>
-        <td>Disk space issue</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>Daniel Moore</td>
-        <td>Comilla</td>
-        <td>Connection error</td>
-        <td>Processing</td>
-      </tr>
     </tbody>
   </table>
 </div>
 
+<!-- Popup Form -->
+<div class="overlay" id="overlay"></div>
+<div class="input-popup" id="inputPopup">
+  <h2>Add New Issue</h2>
+  <form id="issueForm">
+    <input type="text" id="nameInput" placeholder="Enter Name & Contact" required><br>
+    <input type="text" id="locationInput" placeholder="Enter Location" required><br>
+    <input type="text" id="problemInput" placeholder="Enter Problem" required><br>
+    <div class="popup-buttons">
+      <button type="button" id="closePopupBtn">Cancel</button>
+      <button type="button" id="submitBtn">Add Issue</button>
+    </div>
+  </form>
+</div>
+
 <script>
+  // Open Popup
+  document.getElementById('openPopupBtn').addEventListener('click', () => {
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('inputPopup').style.display = 'block';
+  });
+
+  // Close Popup
+  document.getElementById('closePopupBtn').addEventListener('click', () => {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('inputPopup').style.display = 'none';
+  });
+
+  // Add issue to table
+  document.getElementById('submitBtn').addEventListener('click', () => {
+    const name = document.getElementById('nameInput').value.trim();
+    const location = document.getElementById('locationInput').value.trim();
+    const problem = document.getElementById('problemInput').value.trim();
+
+    if (!name || !location || !problem) {
+      alert('All fields are required!');
+      return;
+    }
+
+    const table = document.getElementById('issueTable').getElementsByTagName('tbody')[0];
+    const newRow = table.insertRow();
+
+    newRow.innerHTML = `
+      <td>${name}</td>
+      <td>${location}</td>
+      <td>${problem}</td>
+      <td>
+        <select onchange="updateStatus(this)">
+          <option value="Pending" selected>Pending</option>
+          <option value="Processing">Processing</option>
+          <option value="Solved">Solved</option>
+        </select>
+      </td>
+    `;
+    newRow.className = 'status-pending'; // Default color is red
+
+    // Close the popup and clear the inputs
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('inputPopup').style.display = 'none';
+    document.getElementById('nameInput').value = '';
+    document.getElementById('locationInput').value = '';
+    document.getElementById('problemInput').value = '';
+  });
+
+  // Update status functionality
+  function updateStatus(select) {
+    const row = select.closest('tr');
+    row.classList.remove('status-pending', 'status-processing', 'status-solved');
+
+    if (select.value === 'Pending') {
+      row.classList.add('status-pending'); // Red
+    } else if (select.value === 'Processing') {
+      row.classList.add('status-processing'); // Yellow
+    } else if (select.value === 'Solved') {
+      row.classList.add('status-solved'); // Green
+    }
+  }
+
+  // Filter functionality
   function filterTable() {
     const input = document.getElementById('filterInput');
     const filter = input.value.toUpperCase();
@@ -231,24 +292,18 @@
       const td = tr[i].getElementsByTagName('td');
       let match = false;
 
-      // Check if name, location, or problem matches the filter text
       for (let j = 0; j < td.length - 1; j++) {
         if (td[j] && td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
           match = true;
         }
       }
 
-      // Check if status matches the selected status filter
-      const statusCell = td[3];
-      if (statusFilter && statusCell.innerHTML !== statusFilter) {
+      const statusCell = td[3].querySelector('select').value;
+      if (statusFilter && statusCell !== statusFilter) {
         match = false;
       }
 
-      if (match) {
-        tr[i].style.display = '';
-      } else {
-        tr[i].style.display = 'none';
-      }
+      tr[i].style.display = match ? '' : 'none';
     }
   }
 </script>
