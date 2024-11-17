@@ -76,6 +76,39 @@
         font-size: 16px;
       }
     }
+
+    /* Popup Home Button Styling */
+.home-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #4CAF50; /* Green color */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.home-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.1); /* Slightly enlarge button */
+}
+
+/* Mobile-friendly adjustments */
+@media (max-width: 600px) {
+  .home-button {
+    padding: 10px 15px;
+    font-size: 14px;
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -117,6 +150,13 @@
       </li>
     </ul>
   </div>
+<!-- Popup Home Button -->
+<div class="home-button" onclick="redirectToHome()">Home</div>
 
+<script>
+  function redirectToHome() {
+  window.location.href = "index.html"; // Redirect to index.html
+}
+</script>
 </body>
 </html>
