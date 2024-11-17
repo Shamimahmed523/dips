@@ -162,10 +162,12 @@ input[type="text"], select {
   .filter-container select {
     width: 100%; /* Make inputs full-width on smaller screens */
   }
+}
 
 
-  /* Popup Home Button Styling */
-.home-button {
+
+    /* Popup Home Button Styling */
+    .home-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -195,12 +197,13 @@ input[type="text"], select {
     right: 15px;
   }
 }
-
-}
-
   </style>
 </head>
 <body>
+
+  <!-- Popup Home Button -->
+<div class="home-button" onclick="redirectToHome()">Home</div>
+
 
 <div class="container">
   <h1>Support Tracker</h1>
@@ -232,11 +235,22 @@ input[type="text"], select {
       </tr>
     </thead>
     <tbody>
+      <tr class="status-pending">
+        <td>John Doe</td>
+        <td>Dhaka</td>
+        <td>Network issue</td>
+        <td>
+          <select onchange="updateStatus(this)">
+            <option value="Pending" selected>Pending</option>
+            <option value="Processing">Processing</option>
+            <option value="Solved">Solved</option>
+          </select>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
-<!-- Popup Home Button -->
-<div class="home-button" onclick="redirectToHome()">Home</div>
+
 <!-- Popup Form -->
 <div class="overlay" id="overlay"></div>
 <div class="input-popup" id="inputPopup">
@@ -345,7 +359,6 @@ input[type="text"], select {
   function redirectToHome() {
   window.location.href = "index.html"; // Redirect to index.html
 }
-
 </script>
 
 </body>
