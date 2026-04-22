@@ -11,7 +11,7 @@
 </head>
 <body>
     <h1>only led</h1> <br>
-    <p>
+    <pre>
         void setup() 
 { 
   pinMode(12, OUTPUT);           
@@ -25,10 +25,10 @@ void loop()
     digitalWrite(12, LOW);  
     delay(1000);            
 }
-    </p> <br>
+    </pre> <br>
 
        <h1>Temp Sensor</h1> <br>
-    <p>
+    <pre>
         void setup() {
   Serial.begin(9600);
 }
@@ -45,11 +45,11 @@ void loop() {
 
   delay(1000);
 }
-    </p>
+    </pre>
 <br>
 
     <h1>Pir</h1> <br>
-    <p>
+    <pre>
 
         const int PIR_PIN = A0;    
 const int BUZZER_PIN = 12;
@@ -76,6 +76,6 @@ void loop() {
 
   delay(200);
 }
-    </p>
+    </pre>
 </body>
 </html>
