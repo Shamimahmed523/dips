@@ -27,9 +27,55 @@ void loop()
 }
     </p> <br>
 
-       <h1>Pir Sensor</h1> <br>
+       <h1>Temp Sensor</h1> <br>
     <p>
-        
+        void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int sensorValue = analogRead(A0);
+
+  float voltage = sensorValue * (5.0 / 1023.0);
+  float temperature = voltage * 100;  // LM35 gives 10mV per °C
+
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println(" °C");
+
+  delay(1000);
+}
+    </p>
+<br>
+
+    <h1>Pir</h1> <br>
+    <p>
+
+        const int PIR_PIN = A0;    
+const int BUZZER_PIN = 12;
+
+void setup() {
+  pinMode(PIR_PIN, INPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+
+  Serial.begin(115200);
+}
+
+void loop() {
+
+  int motion = digitalRead(PIR_PIN);
+
+  if (motion == HIGH) {
+    Serial.println("Motion Detected!");
+    tone(BUZZER_PIN, 2000);   
+  }
+  else {
+    Serial.println("No Motion");
+    noTone(BUZZER_PIN);       
+  }
+
+  delay(200);
+}
     </p>
 </body>
 </html>
