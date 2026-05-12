@@ -12,71 +12,148 @@
 <body>
     <h1>only led</h1> <br>
     <pre>
-        void setup() 
-{ 
-  pinMode(12, OUTPUT);           
-}
+     # Import libraries
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+from google.colab.patches import cv2_imshow
 
-void loop() 
-{
-    digitalWrite(12, HIGH); 
-    delay(1000);            
-    
-    digitalWrite(12, LOW);  
-    delay(1000);            
-}
-    </pre> <br>       <h1>LED With Button</h1> <br>
-    <pre>
-    const int buttonPin = 2;
-const int ledPin = 13;
+# Load image
+image = cv2.imread('image.jpg')
 
-void setup() {
-  pinMode(buttonPin, INPUT_PULLUP);
-  pinMode(ledPin, OUTPUT);
-}
+# Show original image
+cv2_imshow(image)
 
-void loop() {
-  int buttonState = digitalRead(buttonPin);
+# ------------------------------------------------
+# 1. Observe image size (dimensions)
+# ------------------------------------------------
+height, width, channels = image.shape
 
-  if (buttonState == LOW) {
-    digitalWrite(ledPin, HIGH);
-  } else {
-    digitalWrite(ledPin, LOW);
-  }
-}
-    </pre>
-<br>
+print("Width =", width)
+print("Height =", height)
+print("Channels =", channels)
 
-    <h1>Pir</h1> <br>
-    <pre>
+# Resolution
+print("Resolution =", width, "X", height)
 
-        const int PIR_PIN = A0;    
-const int BUZZER_PIN = 12;
+# Total pixels
+total_pixels = width * height
+print("Total Pixels =", total_pixels)
 
-void setup() {
-  pinMode(PIR_PIN, INPUT);
-  pinMode(BUZZER_PIN, OUTPUT);
+# ------------------------------------------------
+# 2. Scaleup image by factor 2
+# ------------------------------------------------
+scaled_image = cv2.resize(image, None, fx=2, fy=2)
 
-  Serial.begin(115200);
-}
+print("Scaled Image Created")
 
-void loop() {
+# ------------------------------------------------
+# 3. Median Filter (Denoise)
+# ------------------------------------------------
+median = cv2.medianBlur(image, 5)
 
-  int motion = digitalRead(PIR_PIN);
+print("Median Filter Applied")
 
-  if (motion == HIGH) {
-    Serial.println("Motion Detected!");
-    tone(BUZZER_PIN, 2000);   
-  }
-  else {
-    Serial.println("No Motion");
-    noTone(BUZZER_PIN);       
-  }
+# ------------------------------------------------
+# 4. Sharpen the image
+# ------------------------------------------------
+kernel = np.array([[0, -1, 0],
+                   [-1, 5, -1],
+                   [0, -1, 0]])
 
-  delay(200);
-}
+sharpened = cv2.filter2D(image, -1, kernel)
 
-        https://github.com/MrShadow03/CSE-0613-3206-Machine-Learning
+print("Sharpening Applied")
+
+# ------------------------------------------------
+# 5. Invert image colors
+# ------------------------------------------------
+inverse_image = 255 - image
+
+print("Inverse Image Created")
+
+# ------------------------------------------------
+# Display all images
+# ------------------------------------------------
+plt.figure(figsize=(12,8))
+
+# Original
+plt.subplot(2,3,1)
+plt.title("Original")
+plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+plt.axis('off')
+
+# Scaled
+plt.subplot(2,3,2)
+plt.title("Scaled x2")
+plt.imshow(cv2.cvtColor(scaled_image, cv2.COLOR_BGR2RGB))
+plt.axis('off')
+
+# Median Filter
+plt.subplot(2,3,3)
+plt.title("Median Filter")
+plt.imshow(cv2.cvtColor(median, cv2.COLOR_BGR2RGB))
+plt.axis('off')
+
+# Sharpened
+plt.subplot(2,3,4)
+plt.title("Sharpened")
+plt.imshow(cv2.cvtColor(sharpened, cv2.COLOR_BGR2RGB))
+plt.axis('off')
+
+# Inverse
+plt.subplot(2,3,5)
+plt.title("Inverse")
+plt.imshow(cv2.cvtColor(inverse_image, cv2.COLOR_BGR2RGB))
+plt.axis('off')
+
+plt.tight_layout()
+plt.show()
+
+
+
+
+
+
+
+        import cv2
+import numpy as np
+from google.colab.patches import cv2_imshow
+
+image = cv2.imread('/content/image.jpg')
+
+print("Original Image:")
+cv2_imshow(image)
+
+height, width, channels = image.shape
+
+print("Image Width :", width)
+print("Image Height:", height)
+print("Channels    :", channels)
+
+scaled_image = cv2.resize(image, None, fx=2, fy=2)
+
+print("Scaled Image:")
+cv2_imshow(scaled_image)
+
+median_filtered = cv2.medianBlur(scaled_image, 5)
+
+print("Median Filter Applied:")
+cv2_imshow(median_filtered)
+
+kernel = np.array([[0, -1, 0],
+                   [-1, 5,-1],
+                   [0, -1, 0]])
+
+sharpened_image = cv2.filter2D(median_filtered, -1, kernel)
+
+print("Sharpened Image:")
+cv2_imshow(sharpened_image)
+
+inverted_image = cv2.bitwise_not(sharpened_image)
+
+print("Inverted Color Image:")
+cv2_imshow(inverted_image)
     </pre>
 </body>
 </html>
